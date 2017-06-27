@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+require('../common.js')()
+
+program
+    .command('list', 'List objects')
+
+program
+    .command('show', 'Show objects')
+
+program
+    .command('set', 'Set status')
+
+program
+    .command('clear', 'Clear status')
+
+program
+    .command('enable', 'Enable options')
+
+program
+    .command('disable', 'Disable options')
+
+program.parse(process.argv);

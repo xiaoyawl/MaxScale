@@ -1,0 +1,78 @@
+#!/usr/bin/env node
+
+require('../common.js')()
+require('../subcommand.js')()
+
+program
+    .command('servers')
+    .description('List servers')
+    .action(function() {
+
+        getCollection('servers',
+                      ['Server', 'Address', 'Port', 'Connections', 'Status'],
+                      ['id',
+                       'attributes.parameters.address',
+                       'attributes.parameters.port',
+                       'attributes.statistics.connections',
+                       'attributes.status'])
+    })
+
+program
+    .command('services')
+    .description('List services')
+    .action(function() {
+        getCollection('services',
+                      ['Service', 'Router', 'Connections', 'Total Connections', 'Servers'],
+                      ['id',
+                       'attributes.router',
+                       'attributes.connections',
+                       'attributes.total_connections',
+                       'relationships.servers.data[].id'])
+    })
+
+program
+    .command('monitors')
+    .description('List monitors')
+    .action(function() {
+        getCollection('monitors',
+                      ['Monitor', 'Status', 'Servers'],
+                      ['id',
+                       'attributes.state',
+                       'relationships.servers.data[].id'])
+    })
+
+program
+    .command('sessions')
+    .description('List sessions')
+    .action(function() {
+        getCollection('sessions',
+                      ['Id', 'Service', 'User', 'Host'],
+                      ['id',
+                       'relationships.services.data[].id',
+                       'attributes.user',
+                       'attributes.remote'])
+    })
+
+program
+    .command('filters')
+    .description('List filters')
+    .action(function() {
+        getCollection('filters',
+                      ['Filter', 'Service', 'Module'],
+                      ['id',
+                       'relationships.services.data[].id',
+                       'attributes.module'])
+    })
+
+program
+    .command('modules')
+    .description('List loaded modules')
+    .action(function() {
+        getCollection('maxscale/modules',
+                      ['Module', 'Type', 'Version'],
+                      ['id',
+                       'attributes.module_type',
+                       'attributes.version'])
+    })
+
+program.parse(process.argv);
