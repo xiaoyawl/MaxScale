@@ -6,12 +6,12 @@ var Table = require('cli-table');
 require('./common.js')()
 
 module.exports = function() {
-    const maxadmin_version = '1.0.0';
+    const maxctrl_version = '1.0.0';
 
     // Common requirements for all subcommands
     this.program = require('commander');
     this.program
-        .version(maxadmin_version)
+        .version(maxctrl_version)
         .option('-u, --user <username>', 'Username to use [mariadb]', 'mariadb')
         .option('-p, --password <password>', 'Password for the user [admin]', 'admin')
         .option('-h, --host <hostname>', 'The hostname or address where MaxScale is located [localhost]', 'localhost')
